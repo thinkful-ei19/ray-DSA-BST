@@ -228,6 +228,18 @@ class BadBinarySearchTree {
     }
 }
 
+//================================================================
+// HELPER FUNCTION FOR balancedBST()
+function findMinHeight(BST) {
+    //   console.log(BST);
+    if(BST === null) {
+      return 0;
+    } else if(!BST.left && !BST.right) {
+        return 1;
+    } else if(BST.left || BST.right) {
+        return Math.min( (findTreeHeight(BST.left)) , (findTreeHeight(BST.right)) ) + 1;
+    }
+}
 
 //================================================================
 // HELPER FUNCTION FOR thirdLargest()
@@ -294,7 +306,19 @@ function thirdLargest(BST, nth) {
 }
 
 //================================================================
+// Find the largest node
+// Find the smallest node
+// compare their difference in height level and see if it's > 1
+function balancedBST(BST) {
+  let minLevels = findMinHeight(BST);
+  let maxLevels = findTreeHeight(BST);
 
+  if(maxLevels - minLevels > 1) {
+    return false;
+  } else {
+    return true;
+  }
+}
 
 
 
@@ -309,7 +333,6 @@ function main() {
   BST.insert(2);
   BST.insert(5);
   BST.insert(7);
-  BST.insert(10);
 
   
 
@@ -329,7 +352,9 @@ function main() {
 //   console.log(badBST);
 //   console.log(isBST(BST));
 //   console.log(isBST(badBST));
-  console.log(thirdLargest(BST, 3));
+//   console.log(thirdLargest(BST, 3));
+//   console.log(findMinHeight(BST));
+  console.log(balancedBST(BST));
 }
 
 main();
