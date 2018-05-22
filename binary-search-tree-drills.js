@@ -226,7 +226,26 @@ class BadBinarySearchTree {
       }
       return this.left._findMin();
     }
-  }
+}
+
+
+//================================================================
+// HELPER FUNCTION FOR thirdLargest()
+function _nthLargest(tree, state) { 
+    //Finding the largest node means traversing the right first.
+    if (tree.right) {
+        _nthLargest(tree.right, state);
+        if (state.result) return;
+    }
+    if (!--state.n) { 
+        //Found it.
+        state.result = tree.key; 
+        return;
+    }
+    if (tree.left) _nthLargest(tree.left, state);
+}
+
+
 //================================================================
 //Traverse down BST recursively until you find a BST with left and right equals null
 //Each time we traverse down a level in the BST, increase a counter by 1 representing the height of the tree
@@ -265,6 +284,21 @@ function isBST(BST) {
 
 
 //================================================================
+function thirdLargest(BST, nth) {
+  if(BST.key == null) {
+    return null;
+  }
+  let state = {n: nth, result: null};
+  _nthLargest(BST, state);
+  return state.result; 
+}
+
+//================================================================
+
+
+
+
+//================================================================
 function main() {
   let BST = new BinarySearchTree();
   BST.insert(3);
@@ -275,6 +309,8 @@ function main() {
   BST.insert(2);
   BST.insert(5);
   BST.insert(7);
+  BST.insert(10);
+
   
 
   let badBST = new BadBinarySearchTree();
@@ -292,7 +328,8 @@ function main() {
 //   console.log(findTreeHeight(BST));
 //   console.log(badBST);
 //   console.log(isBST(BST));
-  console.log(isBST(badBST));
+//   console.log(isBST(badBST));
+  console.log(thirdLargest(BST, 3));
 }
 
 main();
