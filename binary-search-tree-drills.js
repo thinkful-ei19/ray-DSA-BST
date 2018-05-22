@@ -113,7 +113,20 @@ class BinarySearchTree {
 }
 
 
+//================================================================
+//Traverse down BST recursively until you find a node with left and right equals null
+//Each time we traverse down a level in the BST, increase a counter by 1 representing the height of the tree
 
+function findTreeHeight(BST) {
+//   console.log(BST);
+  if(BST === null) {
+    return 0;
+  } else if(!BST.left && !BST.right) {
+      return 1;
+  } else if(BST.left || BST.right) {
+      return Math.max( (findTreeHeight(BST.left)) , (findTreeHeight(BST.right)) ) + 1;
+  }
+}
 
 //================================================================
 function main() {
@@ -127,7 +140,9 @@ function main() {
   BST.insert(5);
   BST.insert(7);
 
-  console.log(BST);
+//   console.log(BST.key);
+//   console.log(BST.left);
+  console.log(findTreeHeight(BST));
 }
 
 main();
